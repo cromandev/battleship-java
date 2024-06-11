@@ -69,13 +69,15 @@ public class MainEndToEndTest {
   }
 
 
+  // TO-DO: Add testGameLost() method
   @Test
   public void testGameLost() {
     try {
       List<String> inputLines = new LinkedList<>(Arrays.asList(
-          "a1", "a2", "a3", "a4", "a5", "b1", "b2", "b3", "b4", "c1", "c2", "c3", "d1", "d2", "d3", "e1", "e2"
+          "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1"
       ));
-      // Enemy win..
+
+      // Enemy wins
 
       gameInput.provideLines(inputLines.toArray(new String[0]));
       Main.main(new String[]{});

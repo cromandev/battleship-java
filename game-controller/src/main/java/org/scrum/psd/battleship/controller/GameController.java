@@ -73,4 +73,9 @@ public class GameController {
 
         return false;
     }
+
+    public static boolean allShipsDestroyed(Collection<Ship> ships) {
+        return ships.stream().allMatch(ship -> ship.getPositions().stream().allMatch(Position::isHit));
+    }
+
 }

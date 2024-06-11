@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class GameController {
     public static boolean checkIsHit(Collection<Ship> ships, Position shot) {
@@ -23,6 +24,7 @@ public class GameController {
         for (Ship ship : ships) {
             for (Position position : ship.getPositions()) {
                 if (position.equals(shot)) {
+                    position.setHit(true);
                     return true;
                 }
             }
@@ -33,11 +35,11 @@ public class GameController {
 
     public static List<Ship> initializeShips() {
         return Arrays.asList(
-                new Ship("Aircraft Carrier", 5, Color.CADET_BLUE),
-                new Ship("Battleship", 4, Color.RED),
-                new Ship("Submarine", 3, Color.CHARTREUSE),
-                new Ship("Destroyer", 3, Color.YELLOW),
-                new Ship("Patrol Boat", 2, Color.ORANGE));
+            new Ship("Aircraft Carrier", 5, Color.CADET_BLUE),
+            new Ship("Battleship", 4, Color.RED),
+            new Ship("Submarine", 3, Color.CHARTREUSE),
+            new Ship("Destroyer", 3, Color.YELLOW),
+            new Ship("Patrol Boat", 2, Color.ORANGE));
     }
 
     public static boolean isShipValid(Ship ship) {
@@ -50,5 +52,25 @@ public class GameController {
         int number = random.nextInt(size);
         Position position = new Position(letter, number);
         return position;
+    }
+
+    public static boolean checkShipIsDestroyed(Collection<Ship> ships, Position shot) {
+        if (ships == null) {
+            throw new IllegalArgumentException("ships is null");
+        }
+
+        if (shot == null) {
+            throw new IllegalArgumentException("shot is null");
+        }
+
+        for (Ship ship : ships) {
+            for (Position position : ship.getPositions()) {
+                if (position.equals(shot)) {
+                    return ship.getPositions().stream().allMatch(Position::isHit);
+                }
+            }
+        }
+
+        return false;
     }
 }

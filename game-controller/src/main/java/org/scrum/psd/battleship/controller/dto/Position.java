@@ -4,6 +4,8 @@ public class Position {
     private Letter column;
     private int row;
 
+    private boolean hit = false;
+
     public Position() {
         super();
     }
@@ -43,5 +45,13 @@ public class Position {
         }
 
         return false;
+    }
+
+    public boolean isHit() {
+        return hit;
+    }
+
+    public void setHit(boolean hit) {
+        this.hit = hit;
     }
 }

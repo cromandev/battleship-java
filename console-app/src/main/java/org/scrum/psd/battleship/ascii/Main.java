@@ -75,6 +75,9 @@ public class Main {
             System.out.println(isHit ? "Yeah ! Nice hit !" : "Miss");
             telemetry.trackEvent("Player_ShootPosition", "Position", position.toString(), "IsHit", Boolean.valueOf(isHit).toString());
 
+            boolean isDestroyed = GameController.checkShipIsDestroyed(enemyFleet, position);
+            System.out.println(isDestroyed ? "Ohhh Yeah Baby ! One ship down !" : "The ship is still alive");
+
             position = getRandomPosition();
             isHit = GameController.checkIsHit(myFleet, position);
             System.out.println("");
@@ -91,6 +94,9 @@ public class Main {
                 System.out.println("            -   (\\- |  \\ /  |  /)  -");
                 System.out.println("                 -\\  \\     /  /-");
                 System.out.println("                   \\  \\   /  /");
+
+                boolean yourShipDestroyed = GameController.checkShipIsDestroyed(myFleet, position);
+                System.out.println(yourShipDestroyed ? "Awww your ship was destroyed !" : "Your ship is still alive");
 
             }
         } while (true);

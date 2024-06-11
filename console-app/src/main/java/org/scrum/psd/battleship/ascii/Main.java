@@ -141,29 +141,35 @@ public class Main {
         }
     }
 
-    private static void InitializeEnemyFleet() {
-        enemyFleet = GameController.initializeShips();
-
-        enemyFleet.get(0).getPositions().add(new Position(Letter.B, 4));
-        enemyFleet.get(0).getPositions().add(new Position(Letter.B, 5));
-        enemyFleet.get(0).getPositions().add(new Position(Letter.B, 6));
-        enemyFleet.get(0).getPositions().add(new Position(Letter.B, 7));
-        enemyFleet.get(0).getPositions().add(new Position(Letter.B, 8));
-
-        enemyFleet.get(1).getPositions().add(new Position(Letter.E, 6));
-        enemyFleet.get(1).getPositions().add(new Position(Letter.E, 7));
-        enemyFleet.get(1).getPositions().add(new Position(Letter.E, 8));
-        enemyFleet.get(1).getPositions().add(new Position(Letter.E, 9));
-
-        enemyFleet.get(2).getPositions().add(new Position(Letter.A, 3));
-        enemyFleet.get(2).getPositions().add(new Position(Letter.B, 3));
-        enemyFleet.get(2).getPositions().add(new Position(Letter.C, 3));
-
-        enemyFleet.get(3).getPositions().add(new Position(Letter.F, 8));
-        enemyFleet.get(3).getPositions().add(new Position(Letter.G, 8));
-        enemyFleet.get(3).getPositions().add(new Position(Letter.H, 8));
-
-        enemyFleet.get(4).getPositions().add(new Position(Letter.C, 5));
-        enemyFleet.get(4).getPositions().add(new Position(Letter.C, 6));
+    public static void InitializeEnemyFleet() {
+        enemyFleet = getDefaultEnemyFleet();
     }
+
+    public static List<Ship> getDefaultEnemyFleet() {
+        List<Ship> defaultEnemyFleet = GameController.initializeShips();
+
+        defaultEnemyFleet.get(0).getPositions().add(new Position(Letter.B, 4));
+        defaultEnemyFleet.get(0).getPositions().add(new Position(Letter.B, 5));
+        defaultEnemyFleet.get(0).getPositions().add(new Position(Letter.B, 6));
+        defaultEnemyFleet.get(0).getPositions().add(new Position(Letter.B, 7));
+        defaultEnemyFleet.get(0).getPositions().add(new Position(Letter.B, 8));
+
+        defaultEnemyFleet.get(1).getPositions().add(new Position(Letter.E, 6));
+        defaultEnemyFleet.get(1).getPositions().add(new Position(Letter.E, 7));
+        defaultEnemyFleet.get(1).getPositions().add(new Position(Letter.E, 8));
+        defaultEnemyFleet.get(1).getPositions().add(new Position(Letter.E, 9));
+
+        defaultEnemyFleet.get(2).getPositions().add(new Position(Letter.A, 3));
+        defaultEnemyFleet.get(2).getPositions().add(new Position(Letter.B, 3));
+        defaultEnemyFleet.get(2).getPositions().add(new Position(Letter.C, 3));
+
+        defaultEnemyFleet.get(3).getPositions().add(new Position(Letter.F, 8));
+        defaultEnemyFleet.get(3).getPositions().add(new Position(Letter.G, 8));
+        defaultEnemyFleet.get(3).getPositions().add(new Position(Letter.H, 8));
+
+        defaultEnemyFleet.get(4).getPositions().add(new Position(Letter.C, 5));
+        defaultEnemyFleet.get(4).getPositions().add(new Position(Letter.C, 6));
+        return defaultEnemyFleet;
+    }
+
 }

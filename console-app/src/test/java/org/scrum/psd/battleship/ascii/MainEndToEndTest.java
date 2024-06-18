@@ -6,11 +6,11 @@ import org.junit.Test;
 import org.junit.contrib.java.lang.system.SystemOutRule;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 import org.scrum.psd.battleship.controller.GameController;
+import org.scrum.psd.battleship.controller.dto.Letter;
+import org.scrum.psd.battleship.controller.dto.Position;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream;
 
@@ -20,10 +20,40 @@ public class MainEndToEndTest {
   @ClassRule
   public static final TextFromStandardInputStream gameInput = emptyStandardInputStream();
 
+  public static List<Position> playerPositions = Arrays.asList(
+      new Position(Letter.A, 1),
+      new Position(Letter.A, 2),
+      new Position(Letter.A, 3),
+      new Position(Letter.A, 4),
+      new Position(Letter.A, 5),
+      new Position(Letter.B, 1),
+      new Position(Letter.B, 2),
+      new Position(Letter.B, 3),
+      new Position(Letter.B, 4),
+      new Position(Letter.C, 1),
+      new Position(Letter.C, 2),
+      new Position(Letter.C, 3),
+      new Position(Letter.D, 1),
+      new Position(Letter.D, 2),
+      new Position(Letter.D, 3),
+      new Position(Letter.E, 1),
+      new Position(Letter.E, 2)
+  );
+
+  public static List<String> positionToString(List<Position> positions) {
+    return positions.stream().map(position -> position.getColumn().name() + position.getRow()).collect(Collectors.toList());
+  }
+  public static List<String> getPlayerPositionString() {
+    return positionToString(playerPositions);
+  }
   @Test
   public void testPlayGameShotHits() {
     try {
-      gameInput.provideLines("a1", "a2", "a3", "a4", "a5", "b1", "b2", "b3", "b4", "c1", "c2", "c3", "d1", "d2", "d3", "e1", "e2", "b4");
+      List<String> inputLines = getPlayerPositionString();
+
+      inputLines.add("b4") ;
+
+      gameInput.provideLines(inputLines.toArray(new String[0]));
 
       Main.main(new String[]{});
     } catch (NoSuchElementException e) {
@@ -35,7 +65,9 @@ public class MainEndToEndTest {
   @Test
   public void testPlayGameShotMisses() {
     try {
-      gameInput.provideLines("a1", "a2", "a3", "a4", "a5", "b1", "b2", "b3", "b4", "c1", "c2", "c3", "d1", "d2", "d3", "e1", "e2", "e4");
+      List<String> inputLines = getPlayerPositionString();
+
+      inputLines.add("e4");
 
       Main.main(new String[]{});
     } catch (NoSuchElementException e) {
@@ -47,9 +79,7 @@ public class MainEndToEndTest {
   @Test
   public void testGameWin() {
     try {
-      List<String> inputLines = new LinkedList<>(Arrays.asList(
-          "a1", "a2", "a3", "a4", "a5", "b1", "b2", "b3", "b4", "c1", "c2", "c3", "d1", "d2", "d3", "e1", "e2"
-      ));
+      List<String> inputLines = getPlayerPositionString();
 
       Main.getDefaultEnemyFleet()
           .stream()
@@ -73,11 +103,14 @@ public class MainEndToEndTest {
   @Test
   public void testGameLost() {
     try {
-      List<String> inputLines = new LinkedList<>(Arrays.asList(
-          "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1", "a1"
-      ));
+      Iterator<Position> iterator = playerPositions.iterator();
+      Main.enemyIA=()->{
+        return iterator.next();
+      };
 
-      // Enemy wins
+      final List<String> inputLines = getPlayerPositionString();
+
+      playerPositions.forEach((a) -> inputLines.add("a1"));
 
       gameInput.provideLines(inputLines.toArray(new String[0]));
       Main.main(new String[]{});

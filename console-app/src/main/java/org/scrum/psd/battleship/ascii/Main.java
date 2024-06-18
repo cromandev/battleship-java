@@ -6,6 +6,7 @@ import org.scrum.psd.battleship.controller.dto.Position;
 import org.scrum.psd.battleship.controller.dto.Ship;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 import static com.diogonunes.jcolor.Ansi.colorize;
 import static com.diogonunes.jcolor.Attribute.*;
@@ -13,6 +14,8 @@ import static com.diogonunes.jcolor.Attribute.*;
 public class Main {
     private static List<Ship> myFleet;
     private static List<Ship> enemyFleet;
+
+    public static Supplier<Position> enemyIA=Main::getRandomPosition;
 
     private static final Telemetry telemetry = new Telemetry();
 
@@ -78,7 +81,7 @@ public class Main {
             boolean isDestroyed = GameController.checkShipIsDestroyed(enemyFleet, position);
             System.out.println(isDestroyed ? "Ohhh Yeah Baby ! One ship down !" : "The ship is still alive");
 
-            position = getRandomPosition();
+            position = enemyIA.get();
             isHit = GameController.checkIsHit(myFleet, position);
             System.out.println("");
             System.out.println(String.format("Computer shoot in %s%s and %s", position.getColumn(), position.getRow(), isHit ? "hit your ship !" : "miss"));

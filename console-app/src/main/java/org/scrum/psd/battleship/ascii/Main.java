@@ -234,7 +234,7 @@ public class Main {
 
     private static void InitializeGame() {
         InitializeMyFleet();
-
+        computerShots = fillWithAllPositions();
         InitializeEnemyFleet();
     }
 

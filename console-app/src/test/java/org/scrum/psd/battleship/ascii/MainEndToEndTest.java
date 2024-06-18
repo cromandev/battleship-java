@@ -10,6 +10,7 @@ import org.scrum.psd.battleship.controller.dto.Letter;
 import org.scrum.psd.battleship.controller.dto.Position;
 
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream;
@@ -82,7 +83,6 @@ public class MainEndToEndTest {
   public void testGameWin() {
     try {
       List<String> inputLines = getPlayerPositionString();
-
       Main.getDefaultEnemyFleet()
           .stream()
           .forEach(ship ->
@@ -103,6 +103,7 @@ public class MainEndToEndTest {
 
   @Test
   public void testGameLost() {
+    Supplier<Position> defaultIA = Main.enemyIA;
     try {
       Iterator<Position> iterator = playerPositions.iterator();
       Main.enemyIA=()->{
@@ -117,6 +118,8 @@ public class MainEndToEndTest {
       Main.main(new String[]{});
     } catch (NoSuchElementException e) {
       Assert.assertTrue(systemOutRule.getLog().endsWith("YOU LOST!"));
+    }finally {
+      Main.enemyIA = defaultIA;
     }
   }
 

@@ -56,8 +56,18 @@ public class Main {
         do {
             System.out.println("");
             System.out.println("Player, it's your turn");
-            System.out.println("Enter coordinates for your shot :");
-            Position position = parsePosition(scanner.next());
+            System.out.println("Enter coordinates for your shot:");
+
+            String input = scanner.next();
+
+            while(!checkPositionIsValid(input)) {
+                System.out.println("Miss");
+                System.out.println("The position chosen is out of bounds you can select another position:");
+                input = scanner.next();
+            }
+
+            Position position = parsePosition(input);
+
             boolean isHit = GameController.checkIsHit(enemyFleet, position);
             if (isHit) {
                 beep();
@@ -172,6 +182,14 @@ public class Main {
         Letter letter = Letter.valueOf(input.toUpperCase().substring(0, 1));
         int number = Integer.parseInt(input.substring(1));
         return new Position(letter, number);
+    }
+
+    protected static boolean checkPositionIsValid(String input) {
+            try {
+                return Integer.parseInt(input.substring(1)) >= 1 && Integer.parseInt(input.substring(1)) <= 8 && input.toUpperCase().substring(0, 1).matches("^[A-H]$");
+            } catch (IllegalArgumentException ex) {
+                return false;
+            }
     }
 
     private static Position getRandomPosition() {

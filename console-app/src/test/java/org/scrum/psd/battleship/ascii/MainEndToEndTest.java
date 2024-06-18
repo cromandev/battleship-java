@@ -94,7 +94,7 @@ public class MainEndToEndTest {
       gameInput.provideLines(inputLines.toArray(new String[0]));
       Main.main(new String[]{});
     } catch (NoSuchElementException e) {
-      Assert.assertTrue(systemOutRule.getLog().contains("You are the winner!"));
+      Assert.assertTrue(systemOutRule.getLog().endsWith("YOU ARE THE WINNER!"));
     }
   }
 
@@ -115,7 +115,7 @@ public class MainEndToEndTest {
       gameInput.provideLines(inputLines.toArray(new String[0]));
       Main.main(new String[]{});
     } catch (NoSuchElementException e) {
-      Assert.assertTrue(systemOutRule.getLog().contains("You lost!"));
+      Assert.assertTrue(systemOutRule.getLog().endsWith("YOU LOST!"));
     }
   }
 }

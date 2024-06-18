@@ -68,6 +68,8 @@ public class MainEndToEndTest {
       List<String> inputLines = getPlayerPositionString();
 
       inputLines.add("e4");
+      gameInput.provideLines(inputLines.toArray(new String[0]));
+
 
       Main.main(new String[]{});
     } catch (NoSuchElementException e) {
@@ -90,6 +92,7 @@ public class MainEndToEndTest {
 
                   }
               ));
+      System.out.println(inputLines);
 
       gameInput.provideLines(inputLines.toArray(new String[0]));
       Main.main(new String[]{});

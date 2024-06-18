@@ -78,6 +78,28 @@ public class MainEndToEndTest {
     }
   }
 
+  @Test
+  public void testGameWin() {
+    try {
+      List<String> inputLines = getPlayerPositionString();
+
+      Main.getDefaultEnemyFleet()
+          .stream()
+          .forEach(ship ->
+              ship.getPositions().stream().forEach(position -> {
+
+                    inputLines.add(position.getColumn().name() + position.getRow());
+
+                  }
+              ));
+
+      gameInput.provideLines(inputLines.toArray(new String[0]));
+      Main.main(new String[]{});
+    } catch (NoSuchElementException e) {
+      Assert.assertTrue(systemOutRule.getLog().endsWith("YOU ARE THE WINNER!"));
+    }
+  }
+
 
   @Test
   public void testGameLost() {

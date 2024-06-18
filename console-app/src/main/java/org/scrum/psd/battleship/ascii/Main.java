@@ -64,7 +64,7 @@ public class Main {
             String input = scanner.next();
 
             while(!checkPositionIsValid(input)) {
-                System.out.println("Miss");
+                System.out.println("Miss    "+ input);
                 System.out.println("The position chosen is out of bounds you can select another position:");
                 input = scanner.next();
             }
@@ -284,10 +284,10 @@ public class Main {
         defaultEnemyFleet.get(0).getPositions().add(new Position(Letter.B, 7));
         defaultEnemyFleet.get(0).getPositions().add(new Position(Letter.B, 8));
 
+        defaultEnemyFleet.get(1).getPositions().add(new Position(Letter.E, 4));
+        defaultEnemyFleet.get(1).getPositions().add(new Position(Letter.E, 5));
         defaultEnemyFleet.get(1).getPositions().add(new Position(Letter.E, 6));
         defaultEnemyFleet.get(1).getPositions().add(new Position(Letter.E, 7));
-        defaultEnemyFleet.get(1).getPositions().add(new Position(Letter.E, 8));
-        defaultEnemyFleet.get(1).getPositions().add(new Position(Letter.E, 9));
 
         defaultEnemyFleet.get(2).getPositions().add(new Position(Letter.A, 3));
         defaultEnemyFleet.get(2).getPositions().add(new Position(Letter.B, 3));

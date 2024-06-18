@@ -15,7 +15,8 @@ public class Main {
     private static List<Ship> myFleet;
     private static List<Ship> enemyFleet;
 
-    public static Supplier<Position> enemyIA=Main::getRandomPosition;
+    public static List<Position> computerShots = fillWithAllPositions();
+    public static Supplier<Position> enemyIA = Main::getRandomPosition;
 
     private static final Telemetry telemetry = new Telemetry();
 
@@ -201,14 +202,34 @@ public class Main {
             }
     }
 
-    private static Position getRandomPosition() {
+    private static List<Position> fillWithAllPositions() {
+        List<Position> positionSet = new ArrayList<>();
+
         int rows = 8;
         int lines = 8;
+
+        for (int indexLetter = 0; indexLetter < rows; indexLetter++) {
+            for (int number = 1; number <= lines; number++) {
+                Letter letter = Letter.values()[indexLetter];
+                Position position = new Position(letter, number);
+                positionSet.add(position);
+            }
+        }
+
+        return positionSet;
+
+    }
+
+    public static Position getRandomPosition() {
+
+        if (computerShots.isEmpty()) {
+            return null;
+        }
+
         Random random = new Random();
-        Letter letter = Letter.values()[random.nextInt(lines)];
-        int number = random.nextInt(rows);
-        Position position = new Position(letter, number);
-        return position;
+        int indexPosition = random.nextInt(computerShots.size());
+        return computerShots.remove(indexPosition);
+
     }
 
     private static void InitializeGame() {

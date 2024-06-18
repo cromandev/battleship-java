@@ -99,7 +99,6 @@ public class MainEndToEndTest {
   }
 
 
-  // TO-DO: Add testGameLost() method
   @Test
   public void testGameLost() {
     try {
@@ -116,6 +115,43 @@ public class MainEndToEndTest {
       Main.main(new String[]{});
     } catch (NoSuchElementException e) {
       Assert.assertTrue(systemOutRule.getLog().endsWith("YOU LOST!"));
+    }
+  }
+
+  @Test
+  public void testCorrectPosition() {
+    try {
+      gameInput.provideLines(Arrays.asList("a1","a2","b1").toArray(new String[0]));
+      Main.main(new String[]{});
+    } catch (NoSuchElementException e) {
+      Assert.assertTrue(systemOutRule.getLog().contains("Invalid position, please try again"));
+    }
+  }
+  @Test
+  public void testCorrectPosition2() {
+    try {
+      gameInput.provideLines(Arrays.asList("a20").toArray(new String[0]));
+      Main.main(new String[]{});
+    } catch (NoSuchElementException e) {
+      Assert.assertTrue(systemOutRule.getLog().contains("Invalid position, please try again"));
+    }
+  }
+  @Test
+  public void testCorrectPosition3() {
+    try {
+      gameInput.provideLines(Arrays.asList("a1","a3").toArray(new String[0]));
+      Main.main(new String[]{});
+    } catch (NoSuchElementException e) {
+      Assert.assertTrue(systemOutRule.getLog().contains("Invalid position, please try again"));
+    }
+  }
+  @Test
+  public void testCorrectPosition4() {
+    try {
+      gameInput.provideLines(Arrays.asList("a1","b2").toArray(new String[0]));
+      Main.main(new String[]{});
+    } catch (NoSuchElementException e) {
+      Assert.assertTrue(systemOutRule.getLog().contains("Invalid position, please try again"));
     }
   }
 }

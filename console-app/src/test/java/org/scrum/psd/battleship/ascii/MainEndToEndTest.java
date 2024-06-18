@@ -156,4 +156,20 @@ public class MainEndToEndTest {
       Assert.assertTrue(systemOutRule.getLog().contains("Invalid position, please try again"));
     }
   }
+
+  @Test
+  public void testNotRepeatedPositions() {
+
+    Position newPosition;
+    do {
+      newPosition = Main.getRandomPosition();
+      if (newPosition != null) {
+        System.out.println("Position (" + newPosition.getColumn().toString() + ", " + newPosition.getRow() + ")");
+      }
+    } while (newPosition != null);
+
+    Assert.assertNull(newPosition);
+
+  }
+
 }

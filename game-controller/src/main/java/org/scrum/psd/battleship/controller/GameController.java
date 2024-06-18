@@ -9,9 +9,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class GameController {
+
     public static boolean checkIsHit(Collection<Ship> ships, Position shot) {
         if (ships == null) {
             throw new IllegalArgumentException("ships is null");

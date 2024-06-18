@@ -19,7 +19,7 @@ public class Main {
 
     private static final Telemetry telemetry = new Telemetry();
 
-        public static void main(String[] args) {
+    public static void main(String[] args) {
         telemetry.trackEvent("ApplicationStarted", "Technology", "Java");
         System.out.println(colorize("                                     |__", MAGENTA_TEXT()));
         System.out.println(colorize("                                     |\\/", MAGENTA_TEXT()));
@@ -227,9 +227,16 @@ public class Main {
             System.out.println("");
             System.out.println(String.format("Please enter the positions for the %s (size: %s)", ship.getName(), ship.getSize()));
             for (int i = 1; i <= ship.getSize(); i++) {
-                System.out.println(String.format("Enter position %s of %s (i.e A3):", i, ship.getSize()));
-
-                String positionInput = scanner.next();
+                String positionInput;
+                do {
+                    System.out.println(String.format("Enter position %s of %s (i.e A3):", i, ship.getSize()));
+                    positionInput = scanner.next();
+                    if (isValidPosition(myFleet, ship, i, positionInput)) {
+                        break;
+                    } else {
+                        System.out.println("Invalid position, please try again");
+                    }
+                } while (true);
                 ship.addPosition(positionInput);
                 telemetry.trackEvent("Player_PlaceShipPosition", "Position", positionInput, "Ship", ship.getName(), "PositionInShip", Integer.valueOf(i).toString());
             }
@@ -239,6 +246,34 @@ public class Main {
     public static void InitializeEnemyFleet() {
         enemyFleet = getDefaultEnemyFleet();
     }
+    private static boolean isValidPosition(List<Ship> myFleet, Ship ship, int i, String positionInput) {
+        if(!checkPositionIsValid(positionInput)){
+          return false;
+        }
+        Position position = parsePosition(positionInput);
+        return canAddThisPosition(ship, position)
+            && consecutivePositions(ship, position)
+            && notRepeatedPositions(myFleet, position);
+    }
+
+  private static boolean notRepeatedPositions(List<Ship> myFleet, Position position) {
+        return myFleet.stream().allMatch(ship -> ship.getPositions().stream().noneMatch(p -> p.equals(position)));
+  }
+
+  private static boolean canAddThisPosition(Ship ship, Position position) {
+        return ship.getPositions().size() == 0
+            || ship.getPositions().stream().allMatch(pos -> pos.getRow()==position.getRow())
+            || ship.getPositions().stream().allMatch(pos -> pos.getColumn()==position.getColumn());
+    }
+  private static boolean consecutivePositions(Ship ship, Position position) {
+        if (ship.getPositions().size() == 0) {
+            return true;
+        }
+        Position lastPosition = ship.getPositions().get(ship.getPositions().size() - 1);
+        return Math.abs(lastPosition.getRow() - position.getRow()) <= 1
+            && Math.abs(lastPosition.getColumn().ordinal() - position.getColumn().ordinal()) <=1;
+
+  }
 
     public static List<Ship> getDefaultEnemyFleet() {
         List<Ship> defaultEnemyFleet = GameController.initializeShips();

@@ -67,7 +67,7 @@ public class MainEndToEndTest {
     try {
       List<String> inputLines = getPlayerPositionString();
 
-      inputLines.add("e4");
+      inputLines.add("f4");
       gameInput.provideLines(inputLines.toArray(new String[0]));
 
 

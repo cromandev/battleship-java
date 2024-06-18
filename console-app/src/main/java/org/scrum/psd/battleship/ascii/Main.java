@@ -64,7 +64,7 @@ public class Main {
             String input = scanner.next();
 
             while(!checkPositionIsValid(input)) {
-                System.out.println("Miss    "+ input);
+                System.out.println("Miss");
                 System.out.println("The position chosen is out of bounds you can select another position:");
                 input = scanner.next();
             }

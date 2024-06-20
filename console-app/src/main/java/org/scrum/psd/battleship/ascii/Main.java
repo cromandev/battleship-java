@@ -129,6 +129,20 @@ public class Main {
 
       }
 
+      System.out.println("Ships sunk in your fleet:");
+      for (Ship ship : myFleet) {
+        if (ship.isSunk()) {
+          System.out.println(ship.getName() + ": " + ship.getPositions().stream().map(pos -> "[X]").reduce(" ", String::concat));
+        }
+      }
+
+      System.out.println("Ships left in your fleet:");
+      for (Ship ship : myFleet) {
+        if (!ship.isSunk()) {
+          System.out.println(ship.getName() + ": " + ship.getPositions().stream().map(pos -> "[ ]").reduce(" ", String::concat));
+        }
+      }
+
       boolean iWin = GameController.allShipsDestroyed(enemyFleet);
       boolean isLost = GameController.allShipsDestroyed(myFleet);
 

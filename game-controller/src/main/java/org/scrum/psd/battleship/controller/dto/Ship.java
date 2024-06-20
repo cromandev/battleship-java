@@ -50,6 +50,10 @@ public class Ship {
         return isPlaced;
     }
 
+    public boolean isSunk() {
+        return positions.stream().allMatch(Position::isHit);
+    }
+
     public void setPlaced(boolean placed) {
         isPlaced = placed;
     }
